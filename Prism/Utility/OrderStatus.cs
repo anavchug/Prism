@@ -4,10 +4,10 @@ namespace Prism.Utility
 {
     public static class OrderStatus
     {
-        public static string StatusPending = "Pending";
-        public static string StatusReadyForPickup = "ReadyForPickup";
-        public static string StatusCompleted = "Completed";
-        public static string StatusCancelled = "Cancelled";
+        public static string Pending = "Pending";
+        public static string ReadyForPickup = "ReadyForPickup";
+        public static string Completed = "Completed";
+        public static string Cancelled = "Cancelled";
 
         public static List<OrderDetail> ConvertShoppingCartListToOrderDetail(List<ShoppingCart> shoppingCarts)
         {

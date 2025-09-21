@@ -142,7 +142,7 @@ else
         var user = AuthState.User;
         OrderHeader.UserId = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
         OrderHeader.Email = user.FindFirst(u => u.Type.Contains("email"))?.Value;
-        OrderHeader.Status = OrderStatus.StatusPending;
+        OrderHeader.Status = OrderStatus.Pending;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

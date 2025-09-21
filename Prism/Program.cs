@@ -5,6 +5,7 @@ using Prism.Components;
 using Prism.Components.Account;
 using Prism.Data;
 using Prism.Repository.IRepository;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +41,7 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.AddRadzenComponents();
 
 var app = builder.Build();
 
