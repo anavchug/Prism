@@ -58,7 +58,7 @@ else
                     </div>
                     <div class="col-7 text-end">
                         @if (OrderHeader.Status != OrderStatus.Cancelled && OrderHeader.Status != OrderStatus.Completed &&
-                            AuthenticationStateProvider.GetAuthenticationStateAsync().GetAwaiter().GetResult().User?.IsInRole(RoleTypes.Role_Admin) == true)
+                           AuthenticationStateProvider.GetAuthenticationStateAsync().GetAwaiter().GetResult().User?.IsInRole(RoleTypes.Role_Admin) == true)
                         {
                             <button class="btn btn-danger m-2 p-2" @onclick="() => UpdateStatus(OrderStatus.Cancelled)" style="width:150px;">Cancel Order</button>
 
@@ -91,6 +91,11 @@ else
 
     [Inject]
     public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
