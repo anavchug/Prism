@@ -60,9 +60,9 @@ else
                         @if (OrderHeader.Status != OrderStatus.Cancelled && OrderHeader.Status != OrderStatus.Completed &&
                             AuthenticationStateProvider.GetAuthenticationStateAsync().GetAwaiter().GetResult().User?.IsInRole(RoleTypes.Role_Admin) == true)
                         {
-                            <button class="btn btn-danger m-2 p-2" @onclick="() => UpdateStatus(OrderStatus.Cancelled)" style="width:150px;">Cancelled</button>
+                            <button class="btn btn-danger m-2 p-2" @onclick="() => UpdateStatus(OrderStatus.Cancelled)" style="width:150px;">Cancel Order</button>
 
-                            @if(OrderHeader.Status == OrderStatus.Pending)
+                            @if(OrderHeader.Status == OrderStatus.Approved)
                             {
                                 <button class="btn btn-primary m-2 p-2" @onclick="() => UpdateStatus(OrderStatus.ReadyForPickup)" style="width:150px;">Ready for Pickup</button>
                             }
@@ -112,7 +112,7 @@ else
     {
         if (OrderHeader != null)
         {
-            await OrderRepository.UpdateOrderStatus(OrderId, newStatus);
+            await OrderRepository.UpdateOrderStatus(OrderId, newStatus, "");
             await _JS.ToastrSuccess("Staus updated successfully to " +newStatus);
         }
     }

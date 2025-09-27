@@ -1,9 +1,11 @@
 ﻿@page "/"
 @using System.Globalization
+@using Prism.Services
 @inject AuthenticationStateProvider _AuthenticationStateProvider
 @inject IJSRuntime _JS
 @inject NavigationManager _NavigationManager
 @inject IShoppingCartRepository ShoppingCartRepository
+@inject SharedStateService SharedStateService
 
 <PageTitle>Home</PageTitle>
 
@@ -171,7 +173,9 @@ else
         }
         else
         {
-           var result = await ShoppingCartRepository.UpdateCartAsync(user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value, product.Id, 1);
+            var userId = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
+            var result = await ShoppingCartRepository.UpdateCartAsync(userId, product.Id, 1);
+            SharedStateService.TotalCartCount = await ShoppingCartRepository.GetTotalCartCountAsync(userId);
 
             if (result)
             {

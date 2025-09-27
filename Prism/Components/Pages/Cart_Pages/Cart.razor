@@ -3,6 +3,9 @@
 @using System.Globalization
 @using Prism.Utility
 @attribute [Authorize]
+@using Prism.Services
+@inject SharedStateService SharedStateService
+@inject PaymentService PaymentService
 
 <PageTitle>Home</PageTitle>
 
@@ -174,6 +177,7 @@ else
     private async Task UpdateCartItem(int productId, int updateBy)
     {
         var result = await ShoppingCartRepository.UpdateCartAsync(OrderHeader.UserId, productId, updateBy);
+        SharedStateService.TotalCartCount = await ShoppingCartRepository.GetTotalCartCountAsync(OrderHeader.UserId);
         await LoadCart();
     }
 
@@ -183,9 +187,12 @@ else
         await Task.Yield();
         OrderHeader.OrderDetails = OrderStatus.ConvertShoppingCartListToOrderDetail(ShoppingCarts.ToList());
 
+        var stripeSession = PaymentService.CreateStripeCheckoutSession(OrderHeader);
+        OrderHeader.SessionId = stripeSession.Id;
+
         await OrderRepository.CreateOrderAsync(OrderHeader);
 
-        NavigationManager.NavigateTo($"/order/confirmation/{OrderHeader.Id}");
+        NavigationManager.NavigateTo(stripeSession.Url);
 
     }
 }

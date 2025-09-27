@@ -5,6 +5,7 @@ namespace Prism.Utility
     public static class OrderStatus
     {
         public static string Pending = "Pending";
+        public static string Approved = "Approved";
         public static string ReadyForPickup = "ReadyForPickup";
         public static string Completed = "Completed";
         public static string Cancelled = "Cancelled";

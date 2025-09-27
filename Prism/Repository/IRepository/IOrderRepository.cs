@@ -6,7 +6,8 @@ namespace Prism.Repository.IRepository
     {
         public Task<OrderHeader> CreateOrderAsync(OrderHeader orderHeader);
         public Task<OrderHeader?> GetOrderAsync(int orderId);
+        public Task<OrderHeader?> GetOrderBySessionIdAsync(string sessionId);
         public Task<IEnumerable<OrderHeader>> GetAllOrdersAsync(string? userId = null);
-        public Task<OrderHeader?> UpdateOrderStatus(int orderId, string status);
+        public Task<OrderHeader?> UpdateOrderStatus(int orderId, string status, string paymentIntentId);
     }
 }

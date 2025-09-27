@@ -30,6 +30,9 @@ namespace Prism.Data
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; } = null!;
+        public string? SessionId { get; set; }
+
+        public string? PaymentIntentId { get; set; }
 
         public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
     }

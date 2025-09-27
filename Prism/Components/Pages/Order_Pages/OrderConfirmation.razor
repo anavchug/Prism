@@ -1,4 +1,8 @@
-﻿@page "/order/confirmation/{orderId}"
+﻿@page "/order/confirmation/{session_id}"
+@using Prism.Services
+@using Prism.Utility
+@inject PaymentService PaymentService
+@inject IShoppingCartRepository ShoppingCartRepository
 
 @if (IsProcessing)
 {
@@ -11,7 +15,7 @@ else
     <div class="text-center">
         <h1 class="pt-4 text-success">You are one step closer to delicious food</h1>
         <p class="pt-4">Your order is confirmed! Please note your Order Id for any questions</p>
-        <p>ORDER ID: <b>@orderId</b></p>
+        <p>ORDER ID: <b>@OrderHeader?.Id</b></p>
         <hr />
         <image src="/images/lawn_leaf.jpg" width="40%"></image>
     </div>
@@ -20,12 +24,21 @@ else
 
 @code {
     private bool IsProcessing = true;
+    private OrderHeader? OrderHeader { get; set; }
 
     [Parameter]
-    public string orderId { get; set; } = null!;
+    public string session_id { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
+        OrderHeader = await PaymentService.CheckPaymentStatusAndUpdateOrder(session_id);
+
+        if (OrderHeader != null && OrderHeader.Status == OrderStatus.Approved)
+        {
+            await ShoppingCartRepository.ClearCartAsync(OrderHeader.UserId);
+            
+        }
+
         IsProcessing = false;
     }
 }

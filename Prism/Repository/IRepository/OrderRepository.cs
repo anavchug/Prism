@@ -35,12 +35,23 @@ namespace Prism.Repository.IRepository
                 .FirstOrDefaultAsync(o => o.Id == orderId);
         }
 
-        public async Task<OrderHeader?> UpdateOrderStatus(int orderId, string status)
+        public async Task<OrderHeader?> GetOrderBySessionIdAsync(string sessionId)
+        {
+            return await _db.OrderHeader.FirstOrDefaultAsync(o => o.SessionId == sessionId);
+        }
+
+        public async Task<OrderHeader?> UpdateOrderStatus(int orderId, string status, string paymentIntentId)
         {
            var orderHeader = await _db.OrderHeader.FindAsync(orderId);
             if (orderHeader != null)
             {
                 orderHeader.Status = status;
+
+                if(!string.IsNullOrEmpty(paymentIntentId))
+                {
+                    orderHeader.PaymentIntentId = paymentIntentId;
+                }
+
                 await _db.SaveChangesAsync();
                 return orderHeader;
             }

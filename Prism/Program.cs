@@ -5,9 +5,14 @@ using Prism.Components;
 using Prism.Components.Account;
 using Prism.Data;
 using Prism.Repository.IRepository;
+using Prism.Services;
 using Radzen;
+using Radzen.Blazor.Markdown;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var config = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -21,17 +26,29 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<PaymentService>();
+builder.Services.AddSingleton<SharedStateService>();
 
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = IdentityConstants.ApplicationScheme;
         options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
     })
+    .AddMicrosoftAccount(microsoftOptions =>
+    {
+        microsoftOptions.ClientId = config["Authentication:Microsoft:ClientId"] ?? throw new InvalidOperationException("Missing Microsoft Client ID");
+        microsoftOptions.ClientSecret = config["Authentication:Microsoft:ClientSecret"] ?? throw new InvalidOperationException("Missing Microsoft Client Secret");
+    })
+    .AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = config["Authentication:Google:ClientId"] ?? throw new InvalidOperationException("Missing Google Client ID");
+        googleOptions.ClientSecret = config["Authentication:Google:ClientSecret"] ?? throw new InvalidOperationException("Missing Google Client Secret");
+    })
     .AddIdentityCookies();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString), ServiceLifetime.Transient);
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -44,6 +61,8 @@ builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSe
 builder.Services.AddRadzenComponents();
 
 var app = builder.Build();
+
+StripeConfiguration.ApiKey = config["Stripe:ApiKey"];
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
