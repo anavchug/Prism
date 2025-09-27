@@ -1,1 +1,194 @@
 # Prism
+
+> A full-stack e-commerce web app built with .NET + Blazor, featuring authentication/authorization, product catalog, shopping cart, and order management.
+
+<!-- BADGES (optional)
+[![.NET](https://img.shields.io/badge/.NET-8.0-512BD4)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)]()
+[![Build](https://img.shields.io/github/actions/workflow/status/anavchug/Prism/build.yaml?label=build)]()
+-->
+
+## Table of Contents
+- [Demo](#demo)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Screenshots](#screenshots)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Local Setup](#local-setup)
+  - [Environment Variables](#environment-variables)
+  - [Database & Migrations](#database--migrations)
+  - [Seeding Data (optional)](#seeding-data-optional)
+- [How It Works](#how-it-works)
+- [Roadmap / Future Ideas](#roadmap--future-ideas)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Demo
+
+<!-- PLACEHOLDER: Link or GIF -->
+<!-- e.g., https://your-demo-url -->
+<!-- ![Demo GIF](docs/demo.gif) -->
+
+---
+
+## Features
+- 🔐 **Auth & Roles**: Register/Login via ASP.NET Identity; role-based views (Admin & Customer).
+- 🛍️ **Catalog**: Product listing, detail pages, categories.
+- 🧺 **Cart & Checkout**: Add/remove/update quantities; order placement flow.
+- 📦 **Orders**: Order history & order detail pages.
+- 🖼️ **Image Uploads**: Product images with server-side validation.
+- 🛠️ **Admin Portal**: Manage products, categories, pricing, and inventory.
+- 📱 **Responsive UI**: Bootstrap-based, mobile friendly.
+
+---
+
+## Tech Stack
+**Frontend**: Blazor (Server) + Bootstrap  
+**Backend**: ASP.NET Core (.NET 8) + C#  
+**Data**: Entity Framework Core + SQL Server (LocalDB/Express/Azure SQL)  
+**Auth**: ASP.NET Core Identity (roles: Admin, Customer)  
+**Tooling**: EF Core Migrations, .NET CLI / Visual Studio
+
+---
+
+## Screenshots
+
+<!-- PLACEHOLDERS -->
+<!-- ![Home](docs/screenshots/home.png) -->
+<!-- ![Product List](docs/screenshots/products.png) -->
+<!-- ![Cart](docs/screenshots/cart.png) -->
+<!-- ![Admin - Create Product](docs/screenshots/admin-create-product.png) -->
+
+---
+
+## Architecture
+High-level flow:
+1. **Blazor Server** renders interactive components over SignalR.
+2. **Application layer** coordinates domain models (Products, Orders, Categories, Cart, etc.).
+3. **EF Core** persists data to SQL Server via repositories/DbContext.
+4. **ASP.NET Identity** handles users/roles and protected routes.
+
+<!-- PLACEHOLDER: Architecture Diagram -->
+<!-- ![Architecture](docs/architecture/diagram.png) -->
+
+---
+
+## Getting Started
+
+### Prerequisites
+- **.NET SDK 8.0+**
+- **SQL Server** (LocalDB/Express are fine)
+- (Optional) **Visual Studio 2022/2025** with ASP.NET workload
+- (Optional) **dotnet-ef** CLI:
+  ```bash
+  dotnet tool install --global dotnet-ef
+
+---
+  ### Local Setup
+  1. **Clone**
+       ```bash
+       git clone https://github.com/anavchug/Prism.git
+       cd Prism
+---
+2. **Open & Restore**
+
+- **Open Prism.sln in Visual Studio or run:**
+   ```bash
+    dotnet restore
+
+---
+3. **Configure DB Connection**
+- In appsettings.Development.json, set your connection string, e.g.:
+  ```bash
+    {
+    "ConnectionStrings": {
+      "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=PrismDb;Trusted_Connection=True;MultipleActiveResultSets=true"
+    }
+  }
+  
+  
+### Environment Variables
+```bash
+# From the project directory containing the .csproj:
+dotnet user-secrets init
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=...;Database=PrismDb;..."
+```
+---
+
+### Database & Migrations
+- If the database hasn’t been created:
+  ```bash
+    # From the project directory containing the .csproj:
+    dotnet user-secrets init
+    dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=...;Database=PrismDb;..."
+  ```
+
+- If you’ve added new columns after an earlier migration (e.g., Price on OrderDetail):
+ ```bash
+dotnet ef migrations add AddPriceToOrderDetail
+dotnet ef database update
+```
+---
+### Seeding Data (optional)
+
+You can seed basic data (roles, admin user, categories, sample products).
+Add or update a seed routine (e.g., in Program.cs) and run the app once. Example outline:
+
+```bash
+await RoleManager.CreateAsync(new IdentityRole("Admin"));
+await RoleManager.CreateAsync(new IdentityRole("Customer"));
+```
+
+### How It Works
+
+**Authentication & Authorization**
+
+- ASP.NET Identity manages users, passwords, roles.
+- UI elements are conditionally rendered depending on role (Admin vs Customer).
+
+**Catalog & Cart**
+
+- Products and categories are EF entities.
+- Cart state is tracked per user; add/remove/update count flows through a Cart service.
+
+**Orders**
+
+- On checkout, an OrderHeader and related OrderDetail rows are created from the cart.
+- Users can view past orders; admins can manage order status.
+
+**Images**
+
+- Images are uploaded to wwwroot/images/....
+- Server-side validation ensures file size/format.
+
+### Roadmap / Future Ideas
+
+- 🔎 Full-text search with filters.
+- 💳 Payment integration (Stripe).
+- 🧾 Invoice/PDF generation.
+- 🧠 Recommendations (related products).
+- 🧮 Discounts & coupons.
+- 📈 Admin analytics.
+- 🌐 Localization.
+- 🧪 Automated testing (xUnit, bUnit).
+
+### Contributing
+- PRs welcome!
+- Fork the repo
+- Create a branch: git checkout -b feat/cool-thing
+- Commit: git commit -m "feat: add cool thing"
+- Push: git push origin feat/cool-thing
+- Open a PR
+
+### License
+
+This project is licensed under the MIT License. See LICENSE for details.
+
+### Credits / Acknowledgements
+
+- Built by Anav Chug.
+- Thanks to the .NET & Blazor community and all OSS dependencies.
