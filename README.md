@@ -1,6 +1,6 @@
 # Prism
 
-> A full-stack e-commerce web app built with .NET + Blazor, featuring authentication/authorization, product catalog, shopping cart, and order management.
+A full-stack e-commerce web app built with .NET + Blazor, featuring authentication/authorization, product catalog, shopping cart, and order management.
 
 <!-- BADGES (optional)
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4)]()
@@ -29,9 +29,7 @@
 
 ## Demo
 
-<!-- PLACEHOLDER: Link or GIF -->
-<!-- e.g., https://your-demo-url -->
-<!-- ![Demo GIF](docs/demo.gif) -->
+[Demo]([docs/demo.gif](https://drive.google.com/file/d/11GJdx9GYTxnKm-uYCsG7qkUB8RLwsYEB/view?usp=drive_link)) 
 
 ---
 
@@ -57,11 +55,15 @@
 
 ## Screenshots
 
-<!-- PLACEHOLDERS -->
-<!-- ![Home](docs/screenshots/home.png) -->
-<!-- ![Product List](docs/screenshots/products.png) -->
-<!-- ![Cart](docs/screenshots/cart.png) -->
-<!-- ![Admin - Create Product](docs/screenshots/admin-create-product.png) -->
+<img width="500" height="500" alt="1" src="https://github.com/user-attachments/assets/bfca6bf2-75ca-4216-a4f1-530e91ed7f9a" />
+<img width="500" height="500" alt="2" src="https://github.com/user-attachments/assets/231ef427-35de-4a6c-96a3-69d27571497a" />
+<img width="500" height="500" alt="3" src="https://github.com/user-attachments/assets/0ff80d94-3732-4bf1-8f19-8e13210925e3" />
+<img width="500" height="500" alt="4" src="https://github.com/user-attachments/assets/d94c8d06-675a-4985-930d-891958dd8daa" />
+<img width="500" height="500" alt="5" src="https://github.com/user-attachments/assets/e86bb171-c36c-4604-9de6-79f9e59d1dc3" />
+<img width="500" height="500" alt="6" src="https://github.com/user-attachments/assets/ee47857b-aeb3-4698-8667-0c886a15fb80" />
+<img width="500" height="500" alt="7" src="https://github.com/user-attachments/assets/716c0a61-018c-48fc-8680-29d2e7dee9e5" />
+<img width="500" height="500" alt="8" src="https://github.com/user-attachments/assets/1f2d564a-4e22-46e5-84d8-7027e4faf605" />
+<img width="500" height="500" alt="9" src="https://github.com/user-attachments/assets/4ba7ba2f-a8bb-42ca-8bd5-fd81e75b9431" />
 
 ---
 
