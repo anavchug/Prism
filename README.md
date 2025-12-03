@@ -29,8 +29,7 @@ A full-stack e-commerce web app built with .NET + Blazor, featuring authenticati
 
 ## Demo
 
-[Demo]([docs/demo.gif](https://drive.google.com/file/d/11GJdx9GYTxnKm-uYCsG7qkUB8RLwsYEB/view?usp=drive_link)) 
-[Demo](https://drive.google.com/file/d/11GJdx9GYTxnKm-uYCsG7qkUB8RLwsYEB/view?usp=drive_link)) 
+[Demo](https://drive.google.com/file/d/11GJdx9GYTxnKm-uYCsG7qkUB8RLwsYEB/view?usp=drive_link)
 ---
 
 ## Features
